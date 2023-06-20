@@ -1,0 +1,16 @@
+spring:
+
+  r2dbc:
+    url: r2dbc:pool:postgres://localhost:5433/postgres
+    username: postgres
+    password: postgres
+
+  flyway:
+    url: jdbc:postgresql://localhost:5433/postgres
+    locations: classpath:db/migration
+    user: ${spring.r2dbc.username}
+    password: ${spring.r2dbc.password}
+    baseline-on-migrate: true
+
+api:
+  token: pk_80b4e27d4f7c4136871ef8fb114d5d77
