@@ -25,7 +25,7 @@ public class IexCloudClient {
     }
 
 
-    public List<StockSymbol> getStockSymbols() {
+    public Flux<StockSymbol> getStockSymbols() {
         try {
             return webClientConfig.webClient()
                     .get()
@@ -33,9 +33,7 @@ public class IexCloudClient {
                                    .queryParam("token", token)
                                    .build())
                     .retrieve()
-                    .bodyToFlux(StockSymbol.class)
-                    .collectList()
-                    .block();
+                    .bodyToFlux(StockSymbol.class);
         } catch (Exception e) {
             throw new IexCloudClientException(IEX_CLOUD_CLIENT_EXCEPTION_MESSAGE);
         }
@@ -50,8 +48,7 @@ public class IexCloudClient {
                                    .queryParam("token", token)
                                    .build(symbol))
                                    .retrieve()
-                    .bodyToFlux(new ParameterizedTypeReference<>() {
-                    });
+                    .bodyToFlux(DetailedStockData.class);
         } catch (Exception e) {
             throw new IexCloudClientException(IEX_CLOUD_CLIENT_EXCEPTION_MESSAGE);
         }
