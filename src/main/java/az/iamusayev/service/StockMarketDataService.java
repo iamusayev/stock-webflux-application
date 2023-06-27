@@ -125,12 +125,10 @@ public class StockMarketDataService {
 
     private List<String> fetchEnabledStockSymbols(int offset) {
         return iexCloudClient.getStockSymbols()
-                .parallelStream()
+
                 .skip(offset)
                 .filter(StockSymbol::getIsEnabled)
                 .map(StockSymbol::getSymbol)
                 .filter(Objects::nonNull)
-                .limit(20)
-                .toList();
     }
 }
