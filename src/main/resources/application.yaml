@@ -14,3 +14,5 @@ spring:
 
 api:
   token: pk_80b4e27d4f7c4136871ef8fb114d5d77
+server:
+  port: 8081
