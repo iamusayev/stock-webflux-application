@@ -48,6 +48,7 @@ public class IexCloudClient {
                                    .queryParam("token", token)
                                    .build(symbol))
                                    .retrieve()
+
         } catch (Exception e) {
             throw new IexCloudClientException(IEX_CLOUD_CLIENT_EXCEPTION_MESSAGE);
         }

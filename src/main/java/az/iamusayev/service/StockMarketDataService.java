@@ -130,5 +130,10 @@ public class StockMarketDataService {
                 .filter(StockSymbol::getIsEnabled)
                 .map(StockSymbol::getSymbol)
                 .filter(Objects::nonNull)
+                .skip(offset)
+                .take(25)
+                .collectList()
+                .block();
+
     }
 }
