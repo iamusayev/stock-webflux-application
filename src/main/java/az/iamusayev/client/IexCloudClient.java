@@ -25,6 +25,7 @@ public class IexCloudClient {
     }
 
 
+
     public Flux<StockSymbol> getStockSymbols() {
         try {
             return webClientConfig.webClient()
