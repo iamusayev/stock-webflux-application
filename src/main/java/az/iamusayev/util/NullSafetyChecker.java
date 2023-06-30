@@ -6,7 +6,7 @@ import lombok.experimental.UtilityClass;
 public class NullSafetyChecker {
 
 
-    public static void ensureNonNull(Object... objects) {
+      public void ensureNonNull(Object... objects) {
         for (Object obj : objects) {
             if (obj == null) {
                 throw new NullPointerException("One or more objects are null");
