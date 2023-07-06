@@ -22,9 +22,7 @@ public class IexCloudClient {
                           @Value("${api.token}") final String token) {
         this.webClientConfig = webClientConfig;
         this.token = token;
-    }
-
-
+   }
     public Flux<StockSymbol> getStockSymbols() {
         try {
             return webClientConfig.webClient()
