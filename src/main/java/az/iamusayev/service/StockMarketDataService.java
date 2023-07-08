@@ -1,6 +1,7 @@
 package az.iamusayev.service;
 
 import static az.iamusayev.model.constants.ExceptionConstants.STOCK_DATA_PROCESSING_EXCEPTION_MESSAGE;
+import static az.iamusayev.util.NullSafetyChecker.ensureNonNull;
 
 import az.iamusayev.client.IexCloudClient;
 import az.iamusayev.client.model.DetailedStockData;
@@ -9,7 +10,6 @@ import az.iamusayev.dao.entity.StockEntity;
 import az.iamusayev.dao.repository.StockRepository;
 import az.iamusayev.exception.StockDataProcessingException;
 import az.iamusayev.mapper.StockEntityMapper;
-import az.iamusayev.util.NullSafetyChecker;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -80,7 +80,7 @@ public class StockMarketDataService {
                                                          .collectList()
                                                          .block();
 
-            NullSafetyChecker.ensureNonNull(fetchedStockEntities, existingStockEntities);
+            ensureNonNull(fetchedStockEntities, existingStockEntities);
 
             for (StockEntity fetchedEntity : fetchedStockEntities) {
                 for (StockEntity existingEntity : existingStockEntities) {
@@ -118,20 +118,20 @@ public class StockMarketDataService {
 
     private List<Flux<DetailedStockData>> fetchDetailedStockData(List<String> symbols) {
         return symbols.parallelStream()
-                .map(iexCloudClient::getDetailedStockDataBySymbol)
-                .toList();
+                      .map(iexCloudClient::getDetailedStockDataBySymbol)
+                      .toList();
     }
 
 
     private List<String> fetchEnabledStockSymbols(int offset) {
         return iexCloudClient.getStockSymbols()
-                .skip(offset)
-                .filter(StockSymbol::getIsEnabled)
-                .map(StockSymbol::getSymbol)
-                .filter(Objects::nonNull)
-                .skip(offset)
-                .take(25)
-                .collectList()
-                .block();
+                             .skip(offset)
+                             .filter(StockSymbol::getIsEnabled)
+                             .map(StockSymbol::getSymbol)
+                             .filter(Objects::nonNull)
+                             .skip(offset)
+                             .take(25)
+                             .collectList()
+                             .block();
     }
 }
